@@ -10,6 +10,8 @@ public interface iDAO<T,I>
 
     T getById(I id);
 
+    T update(T t);
+
     void remove(I id);
 
     List<T> getAll();

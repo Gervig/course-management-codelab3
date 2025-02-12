@@ -65,9 +65,28 @@ public class CourseDAO implements iDAO<Course, Integer>
     }
 
     @Override
+    public Course update(Course course)
+    {
+        try (EntityManager em = emf.createEntityManager())
+        {
+            Course updatedCourse = em.find(Course.class,course.getId());
+            if(updatedCourse == null){
+                throw new NullPointerException();
+            }
+            em.getTransaction().begin();
+            updatedCourse = em.merge(course);
+            em.getTransaction().commit();
+            return updatedCourse;
+        } catch (Exception e)
+        {
+            throw new ApiException(401, "Error updating course", e);
+        }
+    }
+
+    @Override
     public void remove(Integer id)
     {
-        try(EntityManager em = emf.createEntityManager())
+        try (EntityManager em = emf.createEntityManager())
         {
             try
             {
@@ -90,7 +109,7 @@ public class CourseDAO implements iDAO<Course, Integer>
     @Override
     public List getAll()
     {
-        try(EntityManager em = emf.createEntityManager())
+        try (EntityManager em = emf.createEntityManager())
         {
             try
             {

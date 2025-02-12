@@ -1,5 +1,6 @@
 package app.dao;
 
+import app.entities.Course;
 import app.entities.Student;
 import app.entities.Teacher;
 import app.exceptions.ApiException;
@@ -60,6 +61,25 @@ public class StudentDAO implements iDAO<Student, Integer>
             {
                 throw new ApiException(401, "Student not found", e);
             }
+        }
+    }
+
+    @Override
+    public Student update(Student student)
+    {
+        try (EntityManager em = emf.createEntityManager())
+        {
+            Student updatedStudent = em.find(Student.class,student.getId());
+            if(updatedStudent == null){
+                throw new NullPointerException();
+            }
+            em.getTransaction().begin();
+            updatedStudent = em.merge(student);
+            em.getTransaction().commit();
+            return updatedStudent;
+        } catch (Exception e)
+        {
+            throw new ApiException(401, "Error updating student", e);
         }
     }
 

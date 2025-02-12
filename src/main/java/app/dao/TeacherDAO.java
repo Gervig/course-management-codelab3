@@ -65,6 +65,25 @@ public class TeacherDAO implements iDAO<Teacher, Integer>
     }
 
     @Override
+    public Teacher update(Teacher teacher)
+    {
+        try (EntityManager em = emf.createEntityManager())
+        {
+            Teacher updatedTeacher = em.find(Teacher.class,teacher.getId());
+            if(updatedTeacher == null){
+                throw new NullPointerException();
+            }
+            em.getTransaction().begin();
+            updatedTeacher = em.merge(teacher);
+            em.getTransaction().commit();
+            return updatedTeacher;
+        } catch (Exception e)
+        {
+            throw new ApiException(401, "Error updating teacher", e);
+        }
+    }
+
+    @Override
     public void remove(Integer id)
     {
         try(EntityManager em = emf.createEntityManager())
