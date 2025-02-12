@@ -48,7 +48,15 @@ public class Course
     @Setter
     private Teacher teacher;
 
-    //Hjælpemetode til at adde students til et kursus
+    //Bi-directional updates
+    public void addTeacher(Teacher teacher){
+        if(teacher != null){
+            this.teacher = teacher;
+            teacher.addCourse(this);
+        }
+    }
+
+                    //Hjælpemetode til at adde students til et kursus
     public void addStudent(Student student){
         if(student != null)
         {
