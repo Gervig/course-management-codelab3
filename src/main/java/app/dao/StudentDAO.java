@@ -125,20 +125,16 @@ public class StudentDAO implements iDAO<Student, Integer>
         }
     }
 
-    public List<Student> getStudentsInCourse(Course course)
+    public List<Student> getStudentsInCourse(Integer courseId)
     {
         try (EntityManager em = emf.createEntityManager())
         {
-            try
-            {
-                TypedQuery<Student> query = em.createQuery("SELECT s FROM Student s WHERE course.id = :courseId",Student.class);
-                query.setParameter("courseId", course.getId());
-                List<Student> studentList = query.getResultList();
-                return studentList;
-            } catch (Exception e)
-            {
-                throw new ApiException(401, "Error finding students for course: " + course.getCourseName(), e);
-            }
+            Course foundCourse = em.find(Course.class, courseId);
+
+            return foundCourse.getStudents().stream().toList();
+        } catch (Exception e)
+        {
+            throw new ApiException(401, "Error finding students for course with id " + courseId, e);
         }
     }
 
