@@ -38,8 +38,17 @@ public class Student
 
     //"Stempler" eleven med localDateTime
     @PrePersist
+    private void beforePersist(){
+        addCreated();
+        addUpdated();
+    }
+
     private void addCreated(){
         createdAt = LocalDateTime.now();
+    }
+
+    private void addUpdated(){
+        updatedAt = LocalDateTime.now();
     }
 
 }
