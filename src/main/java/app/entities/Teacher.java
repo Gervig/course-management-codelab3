@@ -1,11 +1,11 @@
 package app.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @ToString
@@ -32,5 +32,7 @@ public class Teacher
     }
 
 
-    //Relationer
+    //Relation til course
+    @OneToMany(mappedBy = "courses", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Course> courses = new HashSet<>();
 }

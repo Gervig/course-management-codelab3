@@ -41,4 +41,8 @@ public class Course
     //Relation til student, en klasse kan have mange studerende
     @OneToMany(mappedBy = "student", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Student> students = new HashSet<>();
+
+    //Relation til teacher, et kursus kan have 1 lærer
+    @ManyToOne
+    private Teacher teacher;
 }
