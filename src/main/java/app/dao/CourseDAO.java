@@ -143,4 +143,23 @@ public class CourseDAO implements iDAO<Course, Integer>
 
     }
 
+    //WTF are we doing?
+    /*
+    public List<Student> getStudentForTeachersCourse(Integer courseId, Integer teacherId)
+    {
+        try (EntityManager em = emf.createEntityManager())
+        {
+            Teacher foundTeacher = em.find(Teacher.class, teacherId);
+
+                TypedQuery<Course> query = em.createQuery("SELECT s FROM Studen s JOIN Course c.students s WHERE s.id = :studentId",Course.class);
+                List<Course> studentList = query.getResultList();
+                return studentList;
+        } catch (Exception e)
+        {
+            throw new ApiException(401, "Error finding students for course with teacher with id " + teacherId, e);
+        }
+    }
+*/
+
+
 }
