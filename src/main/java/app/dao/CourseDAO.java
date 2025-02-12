@@ -123,4 +123,24 @@ public class CourseDAO implements iDAO<Course, Integer>
             }
         }
     }
+
+
+    public List<Course> getCoursesForStudent(Student student)
+    {
+            try (EntityManager em = emf.createEntityManager())
+            {
+                try
+                {
+                    TypedQuery<Course> query = em.createQuery("SELECT c FROM Course c JOIN c.students s WHERE s.id = :studentId",Course.class);
+                    query.setParameter("studentId", student.getId());
+                    List<Course> courseList = query.getResultList();
+                    return courseList;
+                } catch (Exception e)
+                {
+                    throw new ApiException(401, "Error finding courses for student: " + student.getName(), e);
+                }
+            }
+
+    }
+
 }

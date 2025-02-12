@@ -131,8 +131,8 @@ public class StudentDAO implements iDAO<Student, Integer>
         {
             try
             {
-                Integer courseId = course.getId();
-                TypedQuery<Student> query = em.createQuery("SELECT s FROM Student s WHERE s.course = :courseId",Student.class);
+                TypedQuery<Student> query = em.createQuery("SELECT s FROM Student s WHERE course.id = :courseId",Student.class);
+                query.setParameter("courseId", course.getId());
                 List<Student> studentList = query.getResultList();
                 return studentList;
             } catch (Exception e)
