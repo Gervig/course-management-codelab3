@@ -69,8 +69,9 @@ public class StudentDAO implements iDAO<Student, Integer>
     {
         try (EntityManager em = emf.createEntityManager())
         {
-            Student updatedStudent = em.find(Student.class,student.getId());
-            if(updatedStudent == null){
+            Student updatedStudent = em.find(Student.class, student.getId());
+            if (updatedStudent == null)
+            {
                 throw new NullPointerException();
             }
             em.getTransaction().begin();
@@ -86,7 +87,7 @@ public class StudentDAO implements iDAO<Student, Integer>
     @Override
     public void remove(Integer id)
     {
-        try(EntityManager em = emf.createEntityManager())
+        try (EntityManager em = emf.createEntityManager())
         {
             try
             {
@@ -109,7 +110,7 @@ public class StudentDAO implements iDAO<Student, Integer>
     @Override
     public List getAll()
     {
-        try(EntityManager em = emf.createEntityManager())
+        try (EntityManager em = emf.createEntityManager())
         {
             try
             {
@@ -123,4 +124,22 @@ public class StudentDAO implements iDAO<Student, Integer>
             }
         }
     }
+
+    public List<Student> getStudentsInCourse(Course course)
+    {
+        try (EntityManager em = emf.createEntityManager())
+        {
+            try
+            {
+                Integer courseId = course.getId();
+                TypedQuery<Student> query = em.createQuery("SELECT s FROM Student s WHERE s.course = :courseId",Student.class);
+                List<Student> studentList = query.getResultList();
+                return studentList;
+            } catch (Exception e)
+            {
+                throw new ApiException(401, "Error finding students for course: " + course.getCourseName(), e);
+            }
+        }
+    }
+
 }
