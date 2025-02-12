@@ -4,15 +4,21 @@ import jakarta.persistence.EntityManagerFactory;
 
 import java.util.List;
 
-public interface iDAO<T>
+public interface iDAO<T,I>
 {
-    T getInstance(EntityManagerFactory _emf);
+    T create(T t);
 
-    T create(T item);
+    T getById(I id);
 
-    T getById(int id);
-
-    T remove(int id);
+    void remove(I id);
 
     List<T> getAll();
+
+    //--------------Generic CRUD methods-------------
+   // T create(T t);
+   // T read(I i);
+   // List<T> readAll();
+   // T update(T t);
+   // void delete(T t);
+
 }
