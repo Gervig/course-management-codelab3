@@ -31,8 +31,16 @@ public class Teacher
         this.zoom = zoom;
     }
 
-
     //Relation til course
     @OneToMany(mappedBy = "courses", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Course> courses = new HashSet<>();
+
+    //Bi-directional update
+    public void addCourse(Course course)
+    {
+        if(course != null){
+            courses.add(course);
+            course.setTeacher(this);
+        }
+    }
 }
