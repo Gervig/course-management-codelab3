@@ -21,10 +21,10 @@ import java.util.Set;
 public class Course
 {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Enumerated(EnumType.STRING)
-    @Column(name="course_name")
+    @Column(name = "course_name")
     private CourseName courseName;
     private String description;
     private LocalDate endDate;
@@ -38,11 +38,21 @@ public class Course
         this.startDate = startDate;
     }
 
+
     //Relation til student, en klasse kan have mange studerende
     @OneToMany(mappedBy = "student", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Student> students = new HashSet<>();
 
     //Relation til teacher, et kursus kan have 1 lærer
     @ManyToOne
+    @Setter
     private Teacher teacher;
+
+    //Hjælpemetode til at adde students til et kursus
+    public void addStudent(Student student){
+        if(student != null)
+        {
+            students.add(student);
+        }
+    }
 }

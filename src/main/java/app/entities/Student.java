@@ -55,4 +55,12 @@ public class Student
     @ManyToOne
     private Course course;
 
+    //Bi-directional update
+    public void addCourse(Course course){
+        if(course != null){
+            this.course = course;
+            course.addStudent(this);
+        }
+    }
+
 }
