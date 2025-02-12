@@ -7,6 +7,8 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @ToString
@@ -35,4 +37,8 @@ public class Course
         this.endDate = endDate;
         this.startDate = startDate;
     }
+
+    //Relation til student, en klasse kan have mange studerende
+    @OneToMany(mappedBy = "student", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Student> students = new HashSet<>();
 }

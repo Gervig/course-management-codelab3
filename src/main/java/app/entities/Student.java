@@ -51,4 +51,8 @@ public class Student
         updatedAt = LocalDateTime.now();
     }
 
+    //Relation til course - 1 student kan have 1 course
+    @ManyToOne
+    private Course course;
+
 }
