@@ -1,5 +1,6 @@
 package app.dao;
 
+import app.entities.Course;
 import app.entities.Student;
 import app.entities.Teacher;
 import app.exceptions.ApiException;
@@ -123,4 +124,18 @@ public class TeacherDAO implements iDAO<Teacher, Integer>
             }
         }
     }
+
+    public List<Course> getCoursesForTeacher(Integer teacherId)
+    {
+        try (EntityManager em = emf.createEntityManager())
+        {
+            Teacher foundTeacher = em.find(Teacher.class, teacherId);
+
+            return foundTeacher.getCourses().stream().toList();
+        } catch (Exception e)
+        {
+            throw new ApiException(401, "Error finding courses for teacher with id " + teacherId, e);
+        }
+    }
+
 }
